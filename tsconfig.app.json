@@ -6,6 +6,9 @@
   },
   "files": [
     "src/main.ts",
+    "src/app/products/products.module.ts",
+    "src/app/orders/orders.module.ts",
+    "src/app/customers/customers.module.ts",
     "src/polyfills.ts"
   ],
   "include": [

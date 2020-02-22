@@ -4,6 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-dynamic-routing": {
+      
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -26,7 +27,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "lazyModules": [
+              
+            ]
           },
           "configurations": {
             "production": {
