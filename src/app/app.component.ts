@@ -28,18 +28,22 @@ export class AppComponent {
   constructor(public router: Router) {
     this.routes
       .pipe(
-        //For "real" dynamic module loading in a "Plugin-System" this would be SystemJS instead of WebPack Code-Splitting + import
-        map(cfg => cfg.map(r => { return { path: r.path, loadChildren: () => import(`./${r.esModule}/${r.esModule}.module`).then(m => m[r.angularModule]) } }))
+       
+        map(cfg => cfg.map(r => {
+          return {
+            path: r.path,
+            // For "real" dynamic module loading in a "Plugin-System" this would be SystemJS instead of WebPack Code-Splitting + import
+            loadChildren: () => import(`./${r.esModule}/${r.esModule}.module`).then(m => m[r.angularModule])
+          }
+        }))
       )
-      .subscribe(cfg => { router.resetConfig(cfg); this.reloadCurrentRoute() });
+      .subscribe(cfg => {
+        router.resetConfig(cfg);
+        // Fortunately, the router recoginzes that its config has changed.
+        // So, no extra magic is necessary here to force a reload of the current route
+        this.router.navigateByUrl(this.router.url);
+      });
 
   }
 
-  //Really?
-  reloadCurrentRoute() {
-    let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
-  }
 }
